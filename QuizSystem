@@ -1,0 +1,200 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+
+
+
+class QuizSystem extends JFrame implements ActionListener {
+
+    private static final long serialVersionUID = 1L;
+
+    JLabel label;
+    JRadioButton radioButton[] = new JRadioButton[5];
+    JButton btnNext , btnResult;
+    ButtonGroup bg;
+    int count = 0, current = 0, x = 1, y = 1, now = 0;
+    int m[] = new int[10];
+
+    // create jFrame with radioButton and JButton
+
+    QuizSystem(String s) {
+        super(s);
+        label = new JLabel();
+        add(label);
+        bg = new ButtonGroup();
+        for (int i = 0; i < 5; i++) {
+            radioButton[i] = new JRadioButton();
+            add(radioButton[i]);
+            bg.add(radioButton[i]);
+        }
+        btnNext = new JButton("Next");
+        btnResult = new JButton("Submit");
+        btnNext.addActionListener(this);
+        btnResult.addActionListener(this);
+        add(btnNext);
+        add(btnResult);
+        set();
+        label.setBounds(30, 40, 450, 20);
+        radioButton[0].setBounds(50, 80, 200, 20);
+        radioButton[0].setBounds(50, 80, 450, 20);
+        radioButton[1].setBounds(50, 110, 200, 20);
+        radioButton[2].setBounds(50, 140, 200, 20);
+        radioButton[3].setBounds(50, 170, 200, 20);
+        btnNext.setBounds(100, 240, 100, 30);
+        btnResult.setBounds(270, 240, 100, 30);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setLocation(250, 100);
+        setVisible(true);
+        setSize(600, 350);
+    }
+
+    // Handle all actions based on event
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnNext) {
+            if (check())
+                count = count + 1;
+            current++;
+            set();
+            if (current == 9) {
+                btnNext.setEnabled(false);
+                btnResult.setText("Submit");
+            }
+        }
+
+        if (e.getActionCommand().equals("Submit")) {
+            if (check())
+                count = count + 1;
+            current++;
+            JOptionPane.showMessageDialog(this, "Correct Answers = " + count);
+            System.exit(0);
+        }
+    }
+
+    // Question with options
+
+    void set() {
+        radioButton[4].setSelected(true);
+        if (current == 0) {
+            label.setText("Q1: Which component is used to debug, compile and execute a program ?");
+            radioButton[0].setText("JVM");
+            radioButton[1].setText("JDK");
+            radioButton[2].setText("JIT");
+            radioButton[3].setText("JRE");
+            btnResult.setEnabled(false);
+        }
+        if (current == 1) {
+            label.setText("Q2: What is the extension of java code files ?");
+            radioButton[0].setText(".class");
+            radioButton[1].setText(".js");
+            radioButton[2].setText(".txt");
+            radioButton[3].setText(".java");
+            btnResult.setEnabled(false);
+        }
+        if (current == 2) {
+            label.setText("Q3: String args[] in main method are used for ?");
+            radioButton[0].setText("Nothing");
+            radioButton[1].setText("Passing arg at compile time");
+            radioButton[2].setText("Passing arg at run time ");
+            radioButton[3].setText("Counting number of words");
+            btnResult.setEnabled(false);
+        }
+        if (current == 3) {
+            label.setText("Q4: The keyword used to create a new object in Java is ___.");
+            radioButton[0].setText("class");
+            radioButton[1].setText("java");
+            radioButton[2].setText("new");
+            radioButton[3].setText("create");
+            btnResult.setEnabled(false);
+        }
+        if (current == 4) {
+            label.setText("Q5: Which of the modifier can't be used for constructors ?");
+            radioButton[0].setText("Static");
+            radioButton[1].setText("Private");
+            radioButton[2].setText("Public");
+            radioButton[3].setText("Protected");
+            btnResult.setEnabled(false);
+        }
+        if (current == 5) {
+            label.setText("Q6: Which is correct statement to create an object of Data class ?");
+            radioButton[0].setText("Data d=new object();");
+            radioButton[1].setText("Data d=new Data();");
+            radioButton[2].setText("Data d()=new Data();");
+            radioButton[3].setText("D.Data d()=new Data();");
+            btnResult.setEnabled(false);
+        }
+        if (current == 6) {
+            label.setText("Q7: What is the return type of a method that not returns any value ?");
+            radioButton[0].setText("Void");
+            radioButton[1].setText("Int");
+            radioButton[2].setText("Double");
+            radioButton[3].setText("None of the above");
+            btnResult.setEnabled(false);
+        }
+        if (current == 7) {
+            label.setText("Q8: Which is the alternative to SWITCH in Java language ?");
+            radioButton[0].setText("break, continue");
+            radioButton[1].setText("got, exit");
+            radioButton[2].setText("for, while");
+            radioButton[3].setText("if, else");
+            btnResult.setEnabled(false);
+        }
+        if (current == 8) {
+            label.setText("Q9: Which statement is true for java ?");
+            radioButton[0].setText("Platform independent");
+            radioButton[1].setText("Platform dependent");
+            radioButton[2].setText("Code dependent");
+            radioButton[3].setText("Sequence dependent");
+            btnResult.setEnabled(false);
+        }
+        if (current == 9) {
+            label.setText("Q10: Which component is used to compile and execute a program ?");
+            radioButton[0].setText("JVM");
+            radioButton[1].setText("JDK");
+            radioButton[2].setText("JIT");
+            radioButton[3].setText("JRE");
+            btnResult.setEnabled(true);
+        }
+        label.setBounds(30, 40, 450, 20);
+        for (int i = 0, j = 0; i <= 90; i += 30, j++)
+            radioButton[j].setBounds(50, 80 + i, 200, 20);
+    }
+
+    // Right answers
+
+    boolean check() {
+        if (current == 0)
+            return (radioButton[1].isSelected());
+        if (current == 1)
+            return (radioButton[3].isSelected());
+        if (current == 2)
+            return (radioButton[2].isSelected());
+        if (current == 3)
+            return (radioButton[2].isSelected());
+        if (current == 4)
+            return (radioButton[0].isSelected());
+        if (current == 5)
+            return (radioButton[1].isSelected());
+        if (current == 6)
+            return (radioButton[0].isSelected());
+        if (current == 7)
+            return (radioButton[3].isSelected());
+        if (current == 8)
+            return (radioButton[0].isSelected());
+        if (current == 9)
+            return (radioButton[1].isSelected());
+        return false;
+    }
+
+    public static void main(String s[])
+
+    {
+        new QuizSystem("Quiz System");
+    }
+}
